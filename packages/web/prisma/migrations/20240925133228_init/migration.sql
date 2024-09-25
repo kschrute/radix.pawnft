@@ -1,0 +1,5 @@
+-- CreateTable
+CREATE TABLE "Loan" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "component" TEXT NOT NULL
+);

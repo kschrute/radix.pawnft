@@ -1,0 +1,12 @@
+{
+  "name": "@app/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "license": "ISC",
+  "scripts": {
+    "dev": "./dev.sh",
+    "build": "scrypto build"
+  },
+  "packageManager": "pnpm@9.10.0"
+}

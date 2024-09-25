@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# builds
+target/
+/packages/*/dist
+/packages/*/node_modules
+/packages/*/target
+
+# local env files
+.env
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# typescript
+\*.tsbuildinfo
+
+# IDE/CodeEditors
+.idea
+.vscode/launch.json

@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "packages/contracts",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"presentation": {
+			  "reveal": "always",
+			  "close": true
+			},
+			"label": "npm: build - packages/contracts",
+			"detail": "scrypto build"
+		}
+	]
+}
