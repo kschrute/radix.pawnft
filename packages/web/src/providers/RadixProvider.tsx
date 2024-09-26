@@ -2,7 +2,7 @@ import { GatewayApiClient, RadixNetwork } from '@radixdlt/babylon-gateway-api-sd
 import { RadixDappToolkit } from '@radixdlt/radix-dapp-toolkit'
 import React, { type ReactNode, useEffect, useState } from 'react'
 
-const applicationName = 'Radix Web3 dApp'
+const applicationName = 'PAWNFT'
 const applicationDappDefinitionAddress = 'account_tdx_2_129s6vwhnh6948kf6wfruevqjrd00dwh2yhrgvx937zf6tmjuqzgjl4'
 const applicationVersion = '1.0.0'
 const networkId = RadixNetwork.Stokenet

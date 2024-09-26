@@ -21,15 +21,13 @@ import type React from 'react'
 import { useState } from 'react'
 
 export default function Borrow() {
-  const { api, account } = useRadix()
+  const { account } = useRadix()
   const [selectedNft, setSelectedNft] = useState<UnknownNFT>()
   const [amount, setAmount] = useState('100')
   const [duration, setDuration] = useState('30')
   const [apr, setApr] = useState('1.5')
   const { sendTransaction } = useSendTransaction()
   const { userNfts } = useUserNFTs()
-
-  // console.log('userNfts', userNfts)
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)
 
@@ -59,8 +57,6 @@ export default function Borrow() {
 
   return (
     <Box>
-      {/*<p>Borrow</p>*/}
-
       <Heading size="lg">Apply for a loan</Heading>
 
       <SimpleGrid columns={3} spacing={5}>
@@ -80,20 +76,6 @@ export default function Borrow() {
         </FormControl>
       </SimpleGrid>
 
-      {/*
-      <FormControl my={5}>
-        <FormLabel>NFT resource address</FormLabel>
-        <Input type="text" value={nftResourceId} onChange={handleResourceIdChange} />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-      </FormControl>
-
-      <FormControl my={5}>
-        <FormLabel>NFT ID</FormLabel>
-        <Input type="text" value={nftId} onChange={handleNftIdChange} />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-      </FormControl>
-*/}
-
       <FormLabel>Select an NFT you want to use as collateral</FormLabel>
 
       {!userNfts && <Skeleton h={10} my={10} />}
@@ -112,14 +94,6 @@ export default function Borrow() {
       <ButtonGroup my={5}>
         <Button onClick={onClickBorrow}>Borrow</Button>
       </ButtonGroup>
-
-      {/*
-      <Debug
-        data={{
-          userNfts,
-        }}
-      />
-*/}
     </Box>
   )
 }

@@ -10,7 +10,6 @@ import MenuToggle from '@/components/MenuToggle'
 
 export default function Header(props: FlexProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const filter = useColorModeValue('none', 'invert()')
   const toggle = () => setIsOpen(!isOpen)
 
   return (

@@ -1,12 +1,9 @@
 'use client'
 
-// import { useRadix } from '@/providers/radix'
 import { useRadix } from '@/hooks/useRadix'
 
 export function useSendTransaction() {
   const { rdt, api } = useRadix()
-  //   const rdt = React.useContext(RdtContext);
-  //   console.log('value', value)
 
   const sendTransaction = async (manifest: string) => {
     if (!api || !rdt) return
@@ -26,9 +23,7 @@ export function useSendTransaction() {
 
     // Fetch the details of changes committed to ledger from Gateway API
     const committedDetails = await api.transaction.getCommittedDetails(result.value.transactionIntentHash)
-
     console.log('committed details:', committedDetails)
-
     console.log('affected_global_entities:', committedDetails.transaction.affected_global_entities)
   }
 

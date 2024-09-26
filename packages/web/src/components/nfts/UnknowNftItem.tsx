@@ -34,9 +34,6 @@ export default function UnknowNftItem({ nft, isActive, onClickSelect }: Props) {
             borderWidth: 2,
             rounded: 5,
           })}
-      // borderColor="red.500"
-      // borderWidth={2}
-      // rounded={5}
     >
       <CardHeader>
         <Heading size="md">
@@ -44,15 +41,6 @@ export default function UnknowNftItem({ nft, isActive, onClickSelect }: Props) {
           &nbsp;{name}
         </Heading>
       </CardHeader>
-      {/*<CardBody>*/}
-      {/*<Text>{type}</Text>*/}
-      {/*<Text>{data?.name ?? 'Unknown'}</Text>*/}
-      {/*</CardBody>*/}
-      {/*
-      <CardFooter>
-        <Button onClick={handleSelect}>Select</Button>
-      </CardFooter>
-*/}
     </Card>
   )
 }

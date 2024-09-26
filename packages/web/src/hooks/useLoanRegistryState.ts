@@ -1,5 +1,4 @@
 import useGatewayRequest from '@/hooks/useGatewayRequest'
-import { useRadix } from '@/hooks/useRadix'
 import transformStateData from '@/utils/transformStateData'
 import { useEffect, useState } from 'react'
 

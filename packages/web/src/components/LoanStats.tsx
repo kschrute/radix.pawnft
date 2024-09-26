@@ -1,6 +1,5 @@
-import { Debug } from '@/components/Debug'
 import useLoanRegistryState from '@/hooks/useLoanRegistryState'
-import { Box, Skeleton, Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/react'
+import { Box, Skeleton, Stat, StatGroup, StatLabel, StatNumber } from '@chakra-ui/react'
 import React from 'react'
 
 export default function LoanStats() {
@@ -33,7 +32,6 @@ export default function LoanStats() {
           <StatNumber>{loans_defaulted_count}</StatNumber>
         </Stat>
       </StatGroup>
-      {/*<Debug data={data} />*/}
     </Box>
   )
 }

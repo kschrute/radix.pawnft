@@ -3,10 +3,10 @@
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import issueLoan from '@/manifests/issueLoan'
+import repayLoan from '@/manifests/repayLoan'
 import type { BorrowerNFT } from '@/types'
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
-import repayLoan from '@/manifests/repayLoan'
 
 type Props = {
   nft: BorrowerNFT
@@ -18,8 +18,6 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
   const { sendTransaction } = useSendTransaction()
 
   const { id, data } = nft
-
-  // console.log('data', data)
 
   const onClickAccept = async () => {
     if (!account) return
@@ -46,10 +44,18 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
         </CardHeader>
         <CardBody>
           <Text>{id}</Text>
-          <Text><b>{data.amount} $XRD</b> amount</Text>
-          <Text><b>{Math.floor(data.total_amount)} $XRD</b> with interest </Text>
-          <Text><b>{data.duration} days</b> term</Text>
-          <Text><b>{data.apr}%</b> APR</Text>
+          <Text>
+            <b>{data.amount} $XRD</b> amount
+          </Text>
+          <Text>
+            <b>{Math.floor(data.total_amount)} $XRD</b> with interest{' '}
+          </Text>
+          <Text>
+            <b>{data.duration} days</b> term
+          </Text>
+          <Text>
+            <b>{data.apr}%</b> APR
+          </Text>
           {data.maturity_date && <Text mt={5}>Matures {data.maturity_date.toDateString()}</Text>}
         </CardBody>
         {!isMyNft && nft.data.status === 'Requested' && (
@@ -63,11 +69,6 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
           </CardFooter>
         )}
       </Card>
-      {/*
-      <Box>
-        <Debug data={nft} />
-      </Box>
-*/}
     </>
   )
 }

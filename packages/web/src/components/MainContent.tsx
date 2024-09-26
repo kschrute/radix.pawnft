@@ -24,8 +24,6 @@ import Link from 'next/link'
 import React from 'react'
 
 export default function MainContent() {
-  const filter = useColorModeValue('none', 'invert()')
-
   return (
     <Box as="main">
       <Heading fontSize="4xl">Use your NFTs to get a loan</Heading>
@@ -34,17 +32,6 @@ export default function MainContent() {
         <Text>It's like a pawn shop, but for NFTs it's and peer-to-peer.</Text>
         <Text>Just pick NFTs you want to use as collateral and apply for a loan. </Text>
       </Box>
-
-      {/*
-      <OrderedList my={5} pl={1}>
-        <ListItem fontSize="large">
-          Just pick which NFTs you want to use as collateral and apply for a loan.
-        </ListItem>
-        <ListItem fontSize="large">
-          Apply for a loan.
-        </ListItem>
-      </OrderedList>
-*/}
 
       <ButtonGroup gap={2} mt={5} flexWrap="wrap">
         <Link href="/borrow">

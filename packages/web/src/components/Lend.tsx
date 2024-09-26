@@ -1,4 +1,3 @@
-import { Debug } from '@/components/Debug'
 import BorrowerNFTItem from '@/components/nfts/BorrowerNFTItem'
 import useBorrowerNFTs from '@/hooks/useBorrowerNFTs'
 import { Box, SimpleGrid, Skeleton } from '@chakra-ui/react'
@@ -15,14 +14,6 @@ export default function Lend() {
           <BorrowerNFTItem key={nft.id} nft={nft} />
         ))}
       </SimpleGrid>
-
-      {/*
-      <Debug
-        data={{
-          borrowerNfts,
-        }}
-      />
-*/}
     </Box>
   )
 }

@@ -1,4 +1,3 @@
-import { Debug } from '@/components/Debug'
 import BorrowerNFTItem from '@/components/nfts/BorrowerNFTItem'
 import LenderNFTItem from '@/components/nfts/LenderNFTItem'
 import useUserNFTs from '@/hooks/useUserNFTs'
@@ -7,9 +6,6 @@ import React from 'react'
 
 export default function MyLoans() {
   const { userBorrowerNfts, userLenderNfts } = useUserNFTs()
-
-  // console.log('userBorrowerNfts', userBorrowerNfts)
-  // console.log('userLenderNfts', userLenderNfts)
 
   return (
     <Box>
@@ -40,8 +36,6 @@ export default function MyLoans() {
           ))}
         </SimpleGrid>
       )}
-
-      {/*<Debug data={{ userBorrowerNfts, userLenderNfts }} />*/}
     </Box>
   )
 }

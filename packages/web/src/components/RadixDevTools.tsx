@@ -5,7 +5,6 @@ import config from '@/config'
 import useGatewayRequest from '@/hooks/useGatewayRequest'
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
-import useUserNFTs from '@/hooks/useUserNFTs'
 import bootstrap from '@/manifests/bootstrap'
 import debug from '@/manifests/debug'
 import instantiateLoanRegistry from '@/manifests/instantiateLoanRegistry'
@@ -16,7 +15,6 @@ export default function RadixDevTools() {
   const gatewayRequest = useGatewayRequest()
   const { api, rdt, account } = useRadix()
   const { sendTransaction } = useSendTransaction()
-  // const { nftIds } = useUserNFTs()
 
   const onClickDev = async () => {
     if (!account || !api || !rdt) {
@@ -94,7 +92,6 @@ export default function RadixDevTools() {
     const manifest = account && instantiateLoanRegistry(account.address)
 
     const res = await sendTransaction(manifest)
-
     console.log('res', res)
   }
 
@@ -106,13 +103,7 @@ export default function RadixDevTools() {
         <Button onClick={onClickBootstrap}>Bootstrap</Button>
         <Button onClick={onClickInstantiateLoanRegistry}>Instantiate Loan Registry</Button>
       </ButtonGroup>
-      <Debug
-        data={
-          {
-            // nftIds,
-          }
-        }
-      />
+      <Debug data={{}} />
     </Box>
   )
 }

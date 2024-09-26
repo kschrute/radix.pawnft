@@ -1,21 +1,21 @@
 'use client'
 
+import useGatewayRequest from '@/hooks/useGatewayRequest'
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
+import takeCollateral from '@/manifests/takeCollateral'
 import type { LenderNFT } from '@/types'
+import transformStateData from '@/utils/transformStateData'
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import useGatewayRequest from '@/hooks/useGatewayRequest'
-import transformStateData from '@/utils/transformStateData'
-import takeCollateral from '@/manifests/takeCollateral'
 
 type Props = {
   nft: LenderNFT
 }
 
 export interface LoanRequestState {
-  borrower_nft_id: string,
-  lender_nft_id: string,
+  borrower_nft_id: string
+  lender_nft_id: string
   loan_amount: number
   loan_amount_total: number
   loan_apr: number
@@ -33,10 +33,7 @@ export default function LenderNFTItem({ nft }: Props) {
   const { sendTransaction } = useSendTransaction()
   const { id, data } = nft
   const [loanRequestState, setLoanRequestState] = useState<LoanRequestState>()
-
   const { loan_amount, loan_amount_total, loan_duration, loan_apr, loan_maturity_date } = loanRequestState || {}
-
-  // console.log('data', data)
 
   useEffect(() => {
     ;(async () => {
@@ -52,9 +49,7 @@ export default function LenderNFTItem({ nft }: Props) {
         aggregation_level: 'Vault',
       })
 
-      const res = transformStateData(state.items[0].details.state.fields)
-
-      console.log('res', res)
+      const res = transformStateData<LoanRequestState>(state.items[0].details.state.fields)
 
       setLoanRequestState(res)
     })()
@@ -81,10 +76,20 @@ export default function LenderNFTItem({ nft }: Props) {
         <CardBody>
           {/*<Text>{data.component}</Text>*/}
 
-          <Text><b>{loan_amount} $XRD</b> amount</Text>
-          <Text><b>{Math.floor(loan_amount_total)} $XRD</b> with interest </Text>
-          <Text><b>{loan_duration} days</b> term</Text>
-          <Text><b>{loan_apr}%</b> APR</Text>
+          <Text>
+            <b>{loan_amount} $XRD</b> amount
+          </Text>
+          {loan_amount_total && (
+            <Text>
+              <b>{Math.floor(loan_amount_total)} $XRD</b> with interest{' '}
+            </Text>
+          )}
+          <Text>
+            <b>{loan_duration} days</b> term
+          </Text>
+          <Text>
+            <b>{loan_apr}%</b> APR
+          </Text>
           {loan_maturity_date && <Text mt={5}>Matures {loan_maturity_date.toISOString()}</Text>}
         </CardBody>
         {nft.data.status === 'Issued' && (
@@ -93,11 +98,6 @@ export default function LenderNFTItem({ nft }: Props) {
           </CardFooter>
         )}
       </Card>
-      {/*
-      <Box>
-        <Debug data={nft} />
-      </Box>
-*/}
     </>
   )
 }
