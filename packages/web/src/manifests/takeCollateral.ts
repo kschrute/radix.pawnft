@@ -1,7 +1,7 @@
 import config from '@/config'
-import type { BorrowerNFT } from '@/types'
+import type { BorrowerNFT, LenderNFT } from '@/types'
 
-export default function repayLoan(account: string, nft: BorrowerNFT) {
+export default function takeCollateral(account: string, nft: LenderNFT) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -18,21 +18,10 @@ CALL_METHOD
 ;
 CALL_METHOD
     Address("${account}")
-    "withdraw"
-    Address("${config.xrdResource}")
-    Decimal("${nft.data.total_amount}")
-;
-TAKE_FROM_WORKTOP
-    Address("${config.xrdResource}")
-    Decimal("${nft.data.total_amount}")
-    Bucket("bucket1")
-;
-CALL_METHOD
-    Address("${account}")
     "create_proof_of_non_fungibles"
     Address("${nft.resource}")
     Array<NonFungibleLocalId>(
-        NonFungibleLocalId("#1#")
+        NonFungibleLocalId("${nft.id}")
     )
 ;
 POP_FROM_AUTH_ZONE
@@ -40,8 +29,7 @@ POP_FROM_AUTH_ZONE
 ;
 CALL_METHOD
     Address("${nft.data.component}")
-    "repay_loan"
-    Bucket("bucket1")
+    "take_collateral"
     Proof("proof1")
 ;
 CALL_METHOD

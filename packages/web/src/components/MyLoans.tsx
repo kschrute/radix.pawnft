@@ -2,14 +2,14 @@ import { Debug } from '@/components/Debug'
 import BorrowerNFTItem from '@/components/nfts/BorrowerNFTItem'
 import LenderNFTItem from '@/components/nfts/LenderNFTItem'
 import useUserNFTs from '@/hooks/useUserNFTs'
-import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, Skeleton, Text } from '@chakra-ui/react'
 import React from 'react'
 
 export default function MyLoans() {
   const { userBorrowerNfts, userLenderNfts } = useUserNFTs()
 
-  console.log('userBorrowerNfts', userBorrowerNfts)
-  console.log('userLenderNfts', userLenderNfts)
+  // console.log('userBorrowerNfts', userBorrowerNfts)
+  // console.log('userLenderNfts', userLenderNfts)
 
   return (
     <Box>
@@ -17,6 +17,7 @@ export default function MyLoans() {
         Borrowing
       </Heading>
 
+      {userBorrowerNfts === undefined && <Skeleton h={10} />}
       {userBorrowerNfts?.length === 0 && <Text>You don't have any loans yet.</Text>}
       {userBorrowerNfts?.length > 0 && (
         <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
@@ -30,6 +31,7 @@ export default function MyLoans() {
         Lending
       </Heading>
 
+      {userLenderNfts === undefined && <Skeleton h={10} />}
       {userLenderNfts?.length === 0 && <Text>You haven't given out any loans yet.</Text>}
       {userLenderNfts?.length > 0 && (
         <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">

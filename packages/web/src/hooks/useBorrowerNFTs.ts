@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 export default function useBorrowerNFTs() {
   const { api } = useRadix()
   const { loan_borrower_nft_resource_manager } = useLoanRegistryState()
-  const [borrowerNfts, setBorrowerNfts] = useState<NonFungibleToken<BorrowerNFTData>[]>([])
+  const [borrowerNfts, setBorrowerNfts] = useState<NonFungibleToken<BorrowerNFTData>[]>()
 
   useEffect(() => {
     if (!api || !loan_borrower_nft_resource_manager) return

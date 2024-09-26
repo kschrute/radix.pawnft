@@ -61,22 +61,24 @@ export default function Borrow() {
     <Box>
       {/*<p>Borrow</p>*/}
 
-      <Heading size="lg">Request a loan</Heading>
+      <Heading size="lg">Apply for a loan</Heading>
 
-      <FormControl my={5}>
-        <FormLabel>Amount</FormLabel>
-        <Input type="text" value={amount} onChange={handleAmountChange} />
-      </FormControl>
+      <SimpleGrid columns={3} spacing={5}>
+        <FormControl my={5}>
+          <FormLabel>Amount</FormLabel>
+          <Input type="text" value={amount} onChange={handleAmountChange} />
+        </FormControl>
 
-      <FormControl my={5}>
-        <FormLabel>Duration</FormLabel>
-        <Input type="text" value={duration} onChange={handleDurationChange} />
-      </FormControl>
+        <FormControl my={5}>
+          <FormLabel>Duration</FormLabel>
+          <Input type="text" value={duration} onChange={handleDurationChange} />
+        </FormControl>
 
-      <FormControl my={5}>
-        <FormLabel>APR</FormLabel>
-        <Input type="text" value={apr} onChange={handleAprChange} />
-      </FormControl>
+        <FormControl my={5}>
+          <FormLabel>APR</FormLabel>
+          <Input type="text" value={apr} onChange={handleAprChange} />
+        </FormControl>
+      </SimpleGrid>
 
       {/*
       <FormControl my={5}>
