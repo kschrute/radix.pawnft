@@ -1,7 +1,7 @@
 'use client'
 
-
-import { useRadix } from '@/providers/radix'
+// import { useRadix } from '@/providers/radix'
+import { useRadix } from '@/hooks/useRadix'
 
 export function useSendTransaction() {
   const { rdt, api } = useRadix()
@@ -9,6 +9,8 @@ export function useSendTransaction() {
   //   console.log('value', value)
 
   const sendTransaction = async (manifest: string) => {
+    if (!api || !rdt) return
+
     console.log('Manifest: ', manifest)
 
     const result = await rdt.walletApi.sendTransaction({

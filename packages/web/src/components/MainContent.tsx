@@ -1,3 +1,5 @@
+'use client'
+
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import {
   Box,

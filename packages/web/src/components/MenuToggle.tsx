@@ -1,20 +1,24 @@
+'use client'
+
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { IconButton } from '@chakra-ui/react'
+import { Box, type BoxProps, IconButton } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
   toggle: () => void
   isOpen: boolean
-}
+} & BoxProps
 
-export default function MenuToggle({ toggle, isOpen }: Props) {
+export default function MenuToggle({ toggle, isOpen, ...rest }: Props) {
   return (
-    <IconButton
-      display={{ base: 'block', md: 'none' }}
-      icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-      aria-label="Toggle Menu"
-      variant="ghost"
-      onClick={toggle}
-    />
+    <Box {...rest}>
+      <IconButton
+        display={{ base: 'block', md: 'none' }}
+        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+        aria-label="Toggle Menu"
+        variant="ghost"
+        onClick={toggle}
+      />
+    </Box>
   )
 }

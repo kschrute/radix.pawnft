@@ -16,6 +16,7 @@ export default function Header(props: FlexProps) {
   return (
     <Box as="header" className="header" {...props}>
       <Flex as="nav" alignItems="center" wrap="wrap" w="100%" p={5}>
+        <MenuToggle alignSelf="self-start" mr={2} toggle={toggle} isOpen={isOpen} />
         <Flex flex={1}>
           <Link href="/">
             <Heading fontSize="4xl">PAWNFT</Heading>
@@ -35,7 +36,6 @@ export default function Header(props: FlexProps) {
           <DarkModeSwitch mr={5} />
           {/* @ts-ignore */}
           <radix-connect-button />
-          <MenuToggle toggle={toggle} isOpen={isOpen} />
         </Flex>
       </Flex>
     </Box>

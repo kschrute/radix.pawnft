@@ -49,6 +49,9 @@ importers:
       '@prisma/client':
         specifier: 5.20.0
         version: 5.20.0(prisma@5.20.0)
+      '@radixdlt/babylon-core-api-sdk':
+        specifier: ^1.2.3
+        version: 1.2.3
       '@radixdlt/babylon-gateway-api-sdk':
         specifier: ^1.7.0
         version: 1.7.0
@@ -884,6 +887,9 @@ packages:
 
   '@prisma/get-platform@5.20.0':
     resolution: {integrity: sha512-8/+CehTZZNzJlvuryRgc77hZCWrUDYd/PmlZ7p2yNXtmf2Una4BWnTbak3us6WVdqoz5wmptk6IhsXdG2v5fmA==}
+
+  '@radixdlt/babylon-core-api-sdk@1.2.3':
+    resolution: {integrity: sha512-BORxmE7j7jn+glNErr/d6n/focPGxYwie0a7G/0OUjjjUE/IlRjgnS5u2vh8mW3Sln7BiCg+UvXGoM1pV7fIsg==}
 
   '@radixdlt/babylon-gateway-api-sdk@1.7.0':
     resolution: {integrity: sha512-bxuu8hhIPYwBBMEcFz29QHois2r/Q16ulVp7FOyRzYkksHpDayz4ye+JlhwV2J4ZDCvfNRQmxHVmcpvKc/j+Dg==}
@@ -2979,6 +2985,8 @@ snapshots:
   '@prisma/get-platform@5.20.0':
     dependencies:
       '@prisma/debug': 5.20.0
+
+  '@radixdlt/babylon-core-api-sdk@1.2.3': {}
 
   '@radixdlt/babylon-gateway-api-sdk@1.7.0': {}
 

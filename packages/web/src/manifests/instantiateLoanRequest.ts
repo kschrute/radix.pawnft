@@ -30,7 +30,7 @@ ${fragment}
   return fragment
 }
 
-export default function (account: string, nftResource: string, nftID: string) {
+export default function (account: string, nftResource: string, nftId: string) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -42,7 +42,7 @@ CALL_METHOD
     "withdraw_non_fungibles"
     Address("${nftResource}")
     Array<NonFungibleLocalId>(
-        NonFungibleLocalId("${nftID}"),
+        NonFungibleLocalId("${nftId}"),
     )
 ;
 TAKE_ALL_FROM_WORKTOP

@@ -1,22 +1,28 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Box, Button, ButtonGroup } from '@chakra-ui/react'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import bootstrap from '@/manifests/bootstrap'
-import { radixDappToolkit, useRadix } from '@/providers/radix'
 import instantiateLoanRegistry from '@/manifests/instantiateLoanRegistry'
 import config from '@/config'
 import { Debug } from '@/components/Debug'
 import useUserNFTs from '@/hooks/useUserNFTs'
+import debug from '@/manifests/debug'
+import { useRadix } from '@/hooks/useRadix'
 
 export default function RadixDevTools() {
-  const { api, account } = useRadix()
+  const { api, rdt, account } = useRadix()
   const { sendTransaction } = useSendTransaction()
   const { nftIds } = useUserNFTs()
 
   const onClickDev = async () => {
-    const walletData = radixDappToolkit.walletApi.getWalletData()
+    if (!account || !api) {
+      console.error('Connect your account first')
+      return
+    }
+
+    const walletData = rdt?.walletApi.getWalletData()
     console.log('walletData', walletData)
 
     if (account) {
@@ -27,13 +33,26 @@ export default function RadixDevTools() {
     console.log('allNonFungibleIds', allNonFungibleIds)
   }
 
-  const onClickBootstrap = async () => {
-    if (!account) {
+  const onClickDebug = async () => {
+    if (!account || !api) {
       console.error('Connect your account first')
       return
     }
 
-    const manifest = account && bootstrap(account.address)
+    // await core.transaction.innerClient.transactionCallPreviewPost()
+
+    const manifest = debug(account.address)
+
+    await sendTransaction(manifest)
+  }
+
+  const onClickBootstrap = async () => {
+    if (!account || !api) {
+      console.error('Connect your account first')
+      return
+    }
+
+    const manifest = bootstrap(account.address)
 
     await sendTransaction(manifest)
   }
@@ -56,6 +75,9 @@ export default function RadixDevTools() {
       <ButtonGroup>
         <Button onClick={onClickDev}>
           Dev
+        </Button>
+        <Button onClick={onClickDebug}>
+          Debug
         </Button>
         <Button onClick={onClickBootstrap}>
           Bootstrap
