@@ -1,13 +1,9 @@
-// use crate::events;
 use crate::enums::LoanStatus;
 use crate::nfts::{LoanBorrowerNFT, LoanLenderNFT};
 use crate::tokens;
 use scrypto::prelude::*;
 
 #[blueprint]
-// #[events(
-//     events::NFTMintedEvent,
-// )]
 mod loan_registry {
     enable_method_auth! {
         roles {
@@ -22,26 +18,25 @@ mod loan_registry {
             get_loan_lender_nft_resource_manager => PUBLIC;
             debug => PUBLIC;
             debug_nfts => PUBLIC;
-            test => PUBLIC;
         }
     }
 
     struct LoanRegistry {
+        // resource manager for nfts issued to borrowers
         loan_borrower_nft_resource_manager: ResourceManager,
+        // resource manager for nfts issued to lenders
         loan_lender_nft_resource_manager: ResourceManager,
-
+        // total loans requested count
         loans_requested_count: u64,
+        // total loans issued count
         loans_issued_count: u64,
+        // total loans repaid count
         loans_repaid_count: u64,
+        // total loans defaulted count
         loans_defaulted_count: u64,
-
-        test_var: u64,
     }
 
     impl LoanRegistry {
-        // Implement the functions and methods which will manage those resources and data
-
-        // This is a function, and can be called directly on the blueprint once deployed
         pub fn instantiate_loan_registry() -> Global<LoanRegistry> {
             let (address_reservation, _component_address) =
                 Runtime::allocate_component_address(Self::blueprint_id());
@@ -49,11 +44,6 @@ mod loan_registry {
             let package_rule: AccessRule = rule!(
                 require(package_of_direct_caller(Runtime::package_address()))
             );
-
-            // let access_rule: AccessRule = rule!(
-            //     require(package_of_direct_caller(Runtime::package_address()))
-            //     || require(global_caller(component_address))
-            // );
 
             let loan_borrower_nft_resource_manager: ResourceManager = tokens::provision_nft_resource_manager::<LoanBorrowerNFT>(
                 package_rule.clone(),
@@ -71,16 +61,14 @@ mod loan_registry {
                 "https://assets-global.website-files.com/6053f7fca5bf627283b582c2/6266da31549a9386481173ed_Scrypto-Icon-Round%403x.png".to_string()
             );
 
-            // Instantiate a Hello component, populating its vault with our supply of 1000 HelloToken
+            // Instantiate a component with nft resource managers and some default values
             Self {
-                // sample_vault: Vault::with_bucket(my_bucket),
                 loan_borrower_nft_resource_manager,
                 loan_lender_nft_resource_manager,
                 loans_requested_count: 0,
                 loans_issued_count: 0,
                 loans_repaid_count: 0,
                 loans_defaulted_count: 0,
-                test_var: 0,
             }
             .instantiate()
             .prepare_to_globalize(OwnerRole::None)
@@ -123,12 +111,16 @@ mod loan_registry {
             return self.loan_lender_nft_resource_manager;
         }
 
-        pub fn test(&mut self) {
-            self.test_var += 1;
-        }
+        
+
+
+
+
+        // ---------------------------------------------------------------------------------------------------
+        // Local debug stuff
+        // ---------------------------------------------------------------------------------------------------
 
         pub fn debug(&self) {
-            // info!("-- DEBUG ------------------------------------------------------------");
             info!("loans_requested_count: {}", self.loans_requested_count);
             info!("loans_issued_count: {}", self.loans_issued_count);
             info!("loans_repaid_count: {}", self.loans_repaid_count);
@@ -161,19 +153,16 @@ mod loan_registry {
                 data.maturity_date,
                 data.closed_date
             );
-            // info!("---------------------------------------------------------------------------------------------------------------------");
         }
 
         fn log_lender_nft(&self, id: &NonFungibleLocalId) {
             let data: LoanLenderNFT = self.loan_lender_nft_resource_manager.get_non_fungible_data(id);
 
             info!(
-                // "LoanLenderNFT   {} [{}] \t component: {:?}",
                 "LoanLenderNFT   {} [{}]",
                 id,
                 Self::format_status(&data.status)
             );
-            // info!("---------------------------------------------------------------------------------------------------------------------");
         }
 
         fn format_status(v: &LoanStatus) -> String {

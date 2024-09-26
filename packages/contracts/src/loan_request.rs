@@ -1,4 +1,3 @@
-// use crate::events;
 use crate::enums::LoanStatus;
 use crate::loan_registry::loan_registry::LoanRegistry;
 use crate::nfts::{LoanBorrowerNFT, LoanLenderNFT};
@@ -6,9 +5,6 @@ use std::ops::Add;
 use scrypto::prelude::*;
 
 #[blueprint]
-// #[events(
-//     events::NFTMintedEvent,
-// )]
 mod loan_request {
     enable_method_auth! {
         roles {
@@ -23,7 +19,6 @@ mod loan_request {
             issue_loan => PUBLIC;
             check_maturity => PUBLIC;
             debug => PUBLIC;
-            debug2 => PUBLIC;
         }
     }
 
@@ -58,18 +53,22 @@ mod loan_request {
     }
 
     impl LoanRequest {
-        // Implement the functions and methods which will manage those resources and data
-
-        // This is a function, and can be called directly on the blueprint once deployed
+        // Intantiates a new loan request with the decired loan parameters
         pub fn instantiate_loan_request(
+            // reference to the `LoanRegistry` component so we can call its methods
             loan_registry_address: ComponentAddress,
+            // stores nfts passed in as collateral
             non_fungible_tokens: Vec<NonFungibleBucket>,
+            // accepted loan payment resource address
             accepted_payment_token: ResourceAddress,
+            // desired loan amount
             loan_amount: Decimal,
+            // desired loan APR
             loan_apr: Decimal,
+            // desired loan duration
             loan_duration: i64,
+            // account to receive loan amount when loan request accepted
             loan_receiver: ComponentAddress,
-            // loan_borrower_nft_global_id: NonFungibleGlobalId,
         ) -> (Global<LoanRequest>, Bucket) {
             assert!(
                 !matches!(
@@ -102,7 +101,7 @@ mod loan_request {
             let loan_amount_total = Self::get_total_loan_amount(loan_amount, loan_apr, loan_duration);
 
             // Mint LoanBorrower NFT
-            let _loans_requested_count = loan_registry.increment_loans_requested_count();
+            loan_registry.increment_loans_requested_count();
             let loans_requested_count = match loan_registry.get_loan_borrower_nft_resource_manager().total_supply() {
                 Some(v) => v.add(1),
                 None => Decimal::from(1),
@@ -123,11 +122,6 @@ mod loan_request {
                 loan_borrower_nft.resource_address(),
                 nft_id.clone()
             );
-
-            // Runtime::emit_event(events::NFTMintedEvent {
-            //     nft_id: nft_id.clone(),
-            //     // name,
-            // });
 
             // define access rules for the roles
             let owner_rule = rule!(require(global_caller(loan_registry_address)));
@@ -189,8 +183,6 @@ mod loan_request {
             );
 
             // Set loan maturity date
-            info!("XXX: {:?}", Clock::current_time_rounded_to_seconds());
-
             let current_time = Clock::current_time_rounded_to_seconds();
             let loan_maturity_date = UtcDateTime::from_instant(&current_time.add_seconds(self.loan_duration).unwrap()).ok().unwrap();
             self.loan_maturity_date = Some(loan_maturity_date);
@@ -206,18 +198,16 @@ mod loan_request {
             }
 
             // Mint LoanLender NFT
-            let _loans_issued_count = self.loan_registry.increment_loans_issued_count();
+            self.loan_registry.increment_loans_issued_count();
             let loans_issued_count = match self.loan_registry.get_loan_lender_nft_resource_manager().total_supply() {
                 Some(v) => v.add(1),
                 None => Decimal::from(1),
             };
             let loans_issued_count_int: u64 = loans_issued_count.try_into().unwrap();
-            // let nft_id = NonFungibleLocalId::Integer(loans_issued_count.into());
             let nft_id = NonFungibleLocalId::Integer(IntegerNonFungibleLocalId::from(loans_issued_count_int));
             let data = Self::new_loan_lender_nft();
             let loan_lender_nft = self.loan_registry.get_loan_lender_nft_resource_manager().mint_non_fungible(&nft_id, data);
             let loan_lender_nft_global_id = NonFungibleGlobalId::new(
-                // self.loan_lender_nft_resource_manager.address(),
                 loan_lender_nft.resource_address(),
                 nft_id.clone()
             );
@@ -233,7 +223,6 @@ mod loan_request {
             return (payment, loan_lender_nft);
         }
 
-        // pub fn repay_loan(&mut self) { todo!() }
         pub fn repay_loan(&mut self, mut payment: Bucket, loan_borrower_nft: Proof) -> (Bucket, Vec<NonFungibleBucket>) {
             assert!(
                 matches!(
@@ -255,7 +244,7 @@ mod loan_request {
                 self.loan_amount_total
             );
 
-            let _loans_repaid_count = self.loan_registry.increment_loans_repaid_count();
+            self.loan_registry.increment_loans_repaid_count();
             let closed_date = UtcDateTime::from_instant(&Clock::current_time_rounded_to_seconds()).ok().unwrap();
 
             let loan_borrower_nft = loan_borrower_nft.check(
@@ -286,7 +275,6 @@ mod loan_request {
         }
 
 
-        // pub fn cancel_request(&mut self) { todo!() }
         pub fn cancel_request(&mut self, loan_borrower_nft: Proof) -> Vec<NonFungibleBucket> {
             info!("[!!!] LOAN STATUS: {}", Self::format_status(&self.loan_status));
 
@@ -307,9 +295,6 @@ mod loan_request {
                 .non_fungible();
 
             info!("[!!!] NFT ID: {}", nft.local_id());
-
-            // assert_eq!(self.borrower_nft_id.as_ref().unwrap(), nft.local_id(), "You are not the borrower");
-
             self.update_borrower_nft(&nft.local_id(), LoanStatus::Cancelled, None, None);
 
             self.loan_status = LoanStatus::Cancelled;
@@ -319,7 +304,7 @@ mod loan_request {
             return nfts;
         }
 
-        pub fn take_collateral(&mut self, loan_lender_nft: Proof) -> Vec<NonFungibleBucket> {
+        pub fn take_collateral(&mut self) -> Vec<NonFungibleBucket> {
             assert!(
                 matches!(
                     self.loan_status,
@@ -333,7 +318,7 @@ mod loan_request {
                 "[take_collateral]: The loan has not reached its maturity!"
             );
 
-            let _loans_defaulted_count = self.loan_registry.increment_loans_defaulted_count();
+            self.loan_registry.increment_loans_defaulted_count();
             let closed_date = UtcDateTime::from_instant(&Clock::current_time_rounded_to_seconds()).ok().unwrap();
 
             self.loan_status = LoanStatus::Defaulted;
@@ -353,9 +338,6 @@ mod loan_request {
                 },
             }
 
-            // self.update_borrower_nft(&nft, LoanStatus::Cancelled, None);
-
-            // let nfts = Self::return_nfts(self);
             let nfts = self.return_nfts();
 
             return nfts;
@@ -375,7 +357,11 @@ mod loan_request {
             }
         }
         
-        // ------------------------------------------------------------------------------
+        fn get_total_loan_amount(loan_amount: Decimal, loan_apr: Decimal, loan_duration: i64) -> Decimal {
+            let total_interest = loan_amount * loan_apr * loan_duration / 365;
+
+            return loan_amount.add(total_interest);
+        }
 
         // Creating a vector of buckets of all of the NFTs that the component has, then adding to it the remaining
         // tokens from the payment
@@ -423,35 +409,14 @@ mod loan_request {
             }
         }
 
-        fn format_status(v: &LoanStatus) -> String {
-            match v {
-                LoanStatus::Requested => return String::from("Requested"),
-                LoanStatus::Cancelled => return String::from("Cancelled"),
-                LoanStatus::Issued => return String::from("Issued"),
-                LoanStatus::Repaid => return String::from("Repaid"),
-                LoanStatus::Defaulted => return String::from("Defaulted"),
-            }
-        }
-
-        fn get_total_loan_amount(loan_amount: Decimal, loan_apr: Decimal, loan_duration: i64) -> Decimal {
-            let total_interest = loan_amount * loan_apr * loan_duration / 365;
-
-            return loan_amount.add(total_interest);
-        }
-
-        // TODO: Pull NFT id from the state to simplify?
         fn update_borrower_nft(
             &self, 
             id: &NonFungibleLocalId,
-            // nft: &NonFungible<LoanBorrowerNFT>,
             status: LoanStatus,
             maturity_date: Option<UtcDateTime>,
             closed_date: Option<UtcDateTime>,
         ) {
-            // self.log_borrower_nft(&nft.local_id());
-
             self.loan_registry.get_loan_borrower_nft_resource_manager().update_non_fungible_data(
-                // &nft.local_id(),
                 id,
                 "status",
                 status,
@@ -478,63 +443,42 @@ mod loan_request {
                     );
                 },
             }
-
-            // self.log_borrower_nft(&nft.local_id());
         }
 
         fn update_lender_nft(
             &self, 
             id: &NonFungibleLocalId,
-            // nft: &NonFungible<LoanLenderNFT>,
             status: LoanStatus,
         ) {
             self.loan_registry.get_loan_lender_nft_resource_manager().update_non_fungible_data(
-                // &nft.local_id(),
                 id,
                 "status",
                 status,
             );
         }
 
-        // fn log_borrower_nft(&self, id: &NonFungibleLocalId, data: &LoanBorrowerNFT) {
-        // fn log_borrower_nft(&self, id: &NonFungibleLocalId) {
-        //     let data: LoanBorrowerNFT = self.loan_registry.get_loan_borrower_nft_resource_manager().get_non_fungible_data(id);
+        
 
-        //     // let date = Some(data.maturity_date);
-        //     // let fmt = date.format("%Y-%m-%d][%H:%M:%S");
-        //     // let fmt = Some("boom");
 
-        //     // match data.maturity_date {
-        //     //     None => info!("No date"),
-        //     //     Some(date) => {
-        //     //         info!("{:?}", date);
-        //     //     }
-        //     // };
 
-        //     info!("-- BORROWER NFT {} --------------------------------------------------------------------------------------------------", id);
-        //     // info!("{:?}", Some(data.maturity_date));
 
-        //     info!(
-        //         "id: {} \t amount: {} \t total_amount: {} \t duration: {} \t  apr: {} \t matures: {:?} \t  closed: {:?} \t status: {}",
-        //         id,
-        //         data.amount,
-        //         data.total_amount,
-        //         data.duration,
-        //         data.apr,
-        //         data.maturity_date,
-        //         data.closed_date,
-        //         Self::format_status(&data.status)
-        //         // Some(data.maturity_date).format("%Y-%m-%d][%H:%M:%S"),
-        //         // data.maturity_date.format("%Y-%m-%d][%H:%M:%S"),
-        //         // data.closed_date
-        //     );
-        //     info!("---------------------------------------------------------------------------------------------------------------------");
-        // }
+        // ---------------------------------------------------------------------------------------------------
+        // Local debug stuff
+        // ---------------------------------------------------------------------------------------------------
+
+        fn format_status(v: &LoanStatus) -> String {
+            match v {
+                LoanStatus::Requested => return String::from("Requested"),
+                LoanStatus::Cancelled => return String::from("Cancelled"),
+                LoanStatus::Issued => return String::from("Issued"),
+                LoanStatus::Repaid => return String::from("Repaid"),
+                LoanStatus::Defaulted => return String::from("Defaulted"),
+            }
+        }
 
         pub fn debug(&self) {
             let now = UtcDateTime::from_instant(&Clock::current_time_rounded_to_seconds()).ok().unwrap();
 
-            // info!("-- DEBUG ------------------------------------------------------------");
             info!("loan_status: {}", Self::format_status(&self.loan_status));
             info!("matured: {}", self.check_maturity());
             info!("Current Time: {:?}", now);
@@ -547,20 +491,6 @@ mod loan_request {
             info!("borrower_nft_id: {:?}", self.borrower_nft_id);
             info!("lender_nft_id: {:?}", self.lender_nft_id);
             info!("loan_receiver: {:?}", self.loan_receiver);
-            // info!("---------------------------------------------------------------------");
         }
-
-        pub fn debug2(&mut self, mut payment: Bucket) -> Bucket {
-            // info!("-- DEBUG ------------------------------------------------------------");
-            info!("loan_amount: {}", self.loan_amount);
-            info!("loan_duration: {}", self.loan_duration);
-            info!("loan_apr: {}", self.loan_apr);
-            info!("loan_receiver: {:?}", self.loan_receiver);
-
-            self.payment_vault.put(payment.take(self.loan_amount));
-
-            return payment;
-        }
-
     }
 }
