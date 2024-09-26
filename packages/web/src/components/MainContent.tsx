@@ -31,7 +31,7 @@ export default function MainContent() {
       <Heading fontSize="4xl">Use your NFTs to get a loan</Heading>
 
       <Box fontSize="xl" my={10}>
-        <Text>It's like a pawn shop, but for NFTs and peer-to-peer.</Text>
+        <Text>It's like a pawn shop, but for NFTs it's and peer-to-peer.</Text>
         <Text>Just pick NFTs you want to use as collateral and apply for a loan. </Text>
       </Box>
 
