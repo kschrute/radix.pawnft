@@ -92,7 +92,7 @@ export default function Borrow() {
       </SimpleGrid>
 
       <ButtonGroup my={5}>
-        <Button onClick={onClickBorrow}>Borrow</Button>
+        <Button colorScheme="purple" onClick={onClickBorrow}>Borrow</Button>
       </ButtonGroup>
     </Box>
   )
