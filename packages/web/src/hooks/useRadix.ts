@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { DataRequestBuilder, type WalletDataStateAccount } from '@radixdlt/radix-dapp-toolkit'
 import { RadixContext } from '@/providers/RadixProvider'
+import { DataRequestBuilder, type WalletDataStateAccount } from '@radixdlt/radix-dapp-toolkit'
+import React, { useEffect, useState } from 'react'
 
 export function useRadix() {
   const [account, setAccount] = useState<WalletDataStateAccount>()

@@ -1,17 +1,20 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Box, Button, ButtonGroup, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
-import useUserNFTs from '@/hooks/useUserNFTs'
 import { Debug } from '@/components/Debug'
-import bootstrap from '@/manifests/bootstrap'
-import { useSendTransaction } from '@/hooks/useSendTransaction'
-import instantiateLoanRequest from '@/manifests/instantiateLoanRequest'
+import config from '@/config'
 import { useRadix } from '@/hooks/useRadix'
+import { useSendTransaction } from '@/hooks/useSendTransaction'
+import useUserNFTs from '@/hooks/useUserNFTs'
+import bootstrap from '@/manifests/bootstrap'
+import instantiateLoanRequest from '@/manifests/instantiateLoanRequest'
+import { Box, Button, ButtonGroup, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
+import React, { useState } from 'react'
 
 export default function Borrow() {
   const { api, account } = useRadix()
-  const [nftResourceId, setNftResourceId] = useState('resource_tdx_2_1n278g09f0keutwd7g5wffypmhjwptx6qf7t6l34tf0z7v48zd206zj')
+  const [nftResourceId, setNftResourceId] = useState(
+    'resource_tdx_2_1ntnamngqfllfy7uz67vnkuvkg8kg42y4mzkpl3xr57f344mf4tf3kt',
+  )
   const [nftId, setNftId] = useState('{c6fc44a1fe07525f-a065657555113865-f34f3ddac94147e0-fb9d517f72619cb8}')
   const { sendTransaction } = useSendTransaction()
   const { nftIds, nfts } = useUserNFTs()
@@ -23,7 +26,11 @@ export default function Borrow() {
   const onClickBorrow = async () => {
     if (!(nftResourceId && nftId && account)) return
 
+    console.log('config', config)
+
     const manifest = instantiateLoanRequest(account.address, nftResourceId, nftId)
+
+    console.log('manifest', manifest)
 
     await sendTransaction(manifest)
   }

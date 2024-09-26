@@ -1,6 +1,6 @@
 import config from '@/config'
 
-export default function (account: string) {
+export default function debug(account: string) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -9,7 +9,7 @@ CALL_METHOD
 ;
 CALL_FUNCTION
     Address("${config.loanRegistryComponentAddress}")
-    "debug"
+    "test"
 ;
 CALL_METHOD
     Address("${account}")

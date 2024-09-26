@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import config from '@/config'
-import type { NonFungibleResourcesCollectionItemVaultAggregated } from '@radixdlt/babylon-gateway-api-sdk'
 import { useRadix } from '@/hooks/useRadix'
+import type { NonFungibleResourcesCollectionItemVaultAggregated } from '@radixdlt/babylon-gateway-api-sdk'
+import { useEffect, useState } from 'react'
 
 export default function useUserNFTs() {
   const { api, account } = useRadix()

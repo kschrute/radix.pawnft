@@ -30,7 +30,7 @@ ${fragment}
   return fragment
 }
 
-export default function (account: string, nftResource: string, nftId: string) {
+export default function instantiateLoanRequest(account: string, nftResource: string, nftId: string) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -42,7 +42,7 @@ CALL_METHOD
     "withdraw_non_fungibles"
     Address("${nftResource}")
     Array<NonFungibleLocalId>(
-        NonFungibleLocalId("${nftId}"),
+        NonFungibleLocalId("${nftId}")
     )
 ;
 TAKE_ALL_FROM_WORKTOP
@@ -55,8 +55,7 @@ CALL_FUNCTION
     "instantiate_loan_request"
     Address("${config.loanRegistryComponentAddress}")
     Array<Bucket>(
-        Bucket("bucket"),
-        Bucket("bucket2")
+        Bucket("bucket")
     )
     Address("${config.xrdResource}")
     Decimal("33")

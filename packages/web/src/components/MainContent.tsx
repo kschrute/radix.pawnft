@@ -10,9 +10,14 @@ import {
   ListItem,
   OrderedList,
   Text,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { EllipsisHorizontalCircleIcon, CircleStackIcon, CurrencyEuroIcon, PercentBadgeIcon } from '@heroicons/react/24/solid'
+import {
+  CircleStackIcon,
+  CurrencyEuroIcon,
+  EllipsisHorizontalCircleIcon,
+  PercentBadgeIcon,
+} from '@heroicons/react/24/solid'
 // import { PercentBadgeIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -23,15 +28,14 @@ export default function MainContent() {
 
   return (
     <Flex as="main" flex={1} flexDir="column" justifyContent="center">
-      <Heading fontSize="4xl">
-        Use your NFTs to get a loan
-      </Heading>
+      <Heading fontSize="4xl">Use your NFTs to get a loan</Heading>
 
-      <Text fontSize="large" my={5}>
-        Just pick which NFTs you want to use as collateral and apply for a loan.
-      </Text>
+      <Box fontSize="xl" my={5}>
+        <Text>It's like a p2p pawn shop, but for NFTs.</Text>
+        <Text>Just pick NFTs you want to use as collateral and apply for a loan.</Text>
+      </Box>
 
-{/*
+      {/*
       <OrderedList my={5} pl={1}>
         <ListItem fontSize="large">
           Just pick which NFTs you want to use as collateral and apply for a loan.
@@ -42,7 +46,7 @@ export default function MainContent() {
       </OrderedList>
 */}
 
-      <ButtonGroup gap={2} flexWrap="wrap">
+      <ButtonGroup gap={2} mt={5} flexWrap="wrap">
         <Link href="/borrow">
           <Button colorScheme="gray" fontWeight="normal" rounded="full" size="lg" gap={2}>
             <CircleStackIcon className="size-6" />

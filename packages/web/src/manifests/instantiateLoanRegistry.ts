@@ -1,6 +1,6 @@
 import config from '@/config'
 
-export default function (account: string) {
+export default function instantiateLoanRegistry(account: string) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")

@@ -22,6 +22,7 @@ mod loan_registry {
             get_loan_lender_nft_resource_manager => PUBLIC;
             debug => PUBLIC;
             debug_nfts => PUBLIC;
+            test => PUBLIC;
         }
     }
 
@@ -33,6 +34,8 @@ mod loan_registry {
         loans_issued_count: u64,
         loans_repaid_count: u64,
         loans_defaulted_count: u64,
+
+        test_var: u64,
     }
 
     impl LoanRegistry {
@@ -77,6 +80,7 @@ mod loan_registry {
                 loans_issued_count: 0,
                 loans_repaid_count: 0,
                 loans_defaulted_count: 0,
+                test_var: 0,
             }
             .instantiate()
             .prepare_to_globalize(OwnerRole::None)
@@ -117,6 +121,10 @@ mod loan_registry {
 
         pub fn get_loan_lender_nft_resource_manager(&mut self) -> ResourceManager {
             return self.loan_lender_nft_resource_manager;
+        }
+
+        pub fn test(&mut self) {
+            self.test_var += 1;
         }
 
         pub fn debug(&self) {

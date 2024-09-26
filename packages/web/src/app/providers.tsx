@@ -1,9 +1,9 @@
 'use client'
 
 import { theme } from '@/app/theme'
+import RadixProvider from '@/providers/RadixProvider'
 import { ChakraProvider } from '@chakra-ui/react'
 import type React from 'react'
-import RadixProvider from '@/providers/RadixProvider'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

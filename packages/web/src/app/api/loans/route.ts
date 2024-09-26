@@ -1,5 +1,5 @@
-import type { NextRequest, NextResponse } from 'next/server'
 import db from '@/db'
+import type { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 60
 
