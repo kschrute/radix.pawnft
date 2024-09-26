@@ -1,25 +1,7 @@
 'use client'
 
-import { TriangleUpIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Heading,
-  ListItem,
-  OrderedList,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react'
-import {
-  CircleStackIcon,
-  CurrencyEuroIcon,
-  EllipsisHorizontalCircleIcon,
-  PercentBadgeIcon,
-} from '@heroicons/react/24/solid'
-// import { PercentBadgeIcon } from '@heroicons/react/24/solid'
-import Image from 'next/image'
+import { Box, Button, ButtonGroup, Heading, Text, } from '@chakra-ui/react'
+import { CircleStackIcon, PercentBadgeIcon, } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import React from 'react'
 
@@ -29,7 +11,7 @@ export default function MainContent() {
       <Heading fontSize="4xl">Use your NFTs to get a loan</Heading>
 
       <Box fontSize="xl" my={10}>
-        <Text>It's like a pawn shop, but for NFTs it's and peer-to-peer.</Text>
+        <Text>It's like a pawn shop, but for NFTs and it's peer-to-peer.</Text>
         <Text>Just pick NFTs you want to use as collateral and apply for a loan. </Text>
       </Box>
 

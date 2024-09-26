@@ -4,6 +4,8 @@ use crate::nfts::{LoanBorrowerNFT, LoanLenderNFT};
 use std::ops::Add;
 use scrypto::prelude::*;
 
+// This component holds a state that tracks a lifecycle of a loan. There's a new component per each loan requested. 
+
 #[blueprint]
 mod loan_request {
     enable_method_auth! {
