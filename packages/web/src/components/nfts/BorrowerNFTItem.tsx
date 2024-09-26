@@ -9,9 +9,10 @@ import React from 'react'
 
 type Props = {
   nft: BorrowerNFT
+  isMyNft?: boolean
 }
 
-export default function BorrowerNFTItem({ nft }: Props) {
+export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
   const { account } = useRadix()
   const { sendTransaction } = useSendTransaction()
 
@@ -20,6 +21,13 @@ export default function BorrowerNFTItem({ nft }: Props) {
   // console.log('data', data)
 
   const onClickAccept = async () => {
+    if (!account) return
+
+    const manifest = issueLoan(account.address, data.component, data.amount)
+    await sendTransaction(manifest)
+  }
+
+  const onClickPayBack = async () => {
     if (!account) return
 
     const manifest = issueLoan(account.address, data.component, data.amount)
@@ -43,9 +51,14 @@ export default function BorrowerNFTItem({ nft }: Props) {
           <Text>APR {data.apr}%</Text>
           {data.maturity_date && <Text>Matures {data.maturity_date.toDateString()}</Text>}
         </CardBody>
-        {nft.data.status === 'Requested' && (
+        {!isMyNft && nft.data.status === 'Requested' && (
           <CardFooter>
             <Button onClick={onClickAccept}>Issue Loan</Button>
+          </CardFooter>
+        )}
+        {isMyNft && nft.data.status === 'Issued' && (
+          <CardFooter>
+            <Button onClick={onClickPayBack}>Pay off</Button>
           </CardFooter>
         )}
       </Card>
