@@ -1,12 +1,9 @@
 'use client'
 
-import { Debug } from '@/components/Debug'
 import UnknowNftItem from '@/components/nfts/UnknowNftItem'
-import config from '@/config'
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import useUserNFTs from '@/hooks/useUserNFTs'
-import bootstrap from '@/manifests/bootstrap'
 import instantiateLoanRequest from '@/manifests/instantiateLoanRequest'
 import type { UnknownNFT } from '@/types'
 import {
@@ -14,29 +11,31 @@ import {
   Button,
   ButtonGroup,
   FormControl,
-  FormHelperText,
   FormLabel,
   Heading,
   Input,
   SimpleGrid,
   Skeleton,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import type React from 'react'
+import { useState } from 'react'
 
 export default function Borrow() {
   const { api, account } = useRadix()
   const [selectedNft, setSelectedNft] = useState<UnknownNFT>()
-  const [amount, setAmount] = useState<number>(100)
-  const [duration, setDuration] = useState<number>(30)
-  const [apr, setApr] = useState<number>(1.5)
+  const [amount, setAmount] = useState('100')
+  const [duration, setDuration] = useState('30')
+  const [apr, setApr] = useState('1.5')
   const { sendTransaction } = useSendTransaction()
   const { userNfts } = useUserNFTs()
 
   // console.log('userNfts', userNfts)
 
-  const handleAmountChange = (e) => setAmount(e.target.value)
-  const handleDurationChange = (e) => setDuration(e.target.value)
-  const handleAprChange = (e) => setApr(e.target.value)
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)
+
+  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => setDuration(e.target.value)
+
+  const handleAprChange = (e: React.ChangeEvent<HTMLInputElement>) => setApr(e.target.value)
 
   const onSelectNft = async (nft: UnknownNFT) => {
     setSelectedNft(nft)
@@ -50,9 +49,9 @@ export default function Borrow() {
       account.address,
       selectedNft.resource,
       selectedNft.id,
-      amount,
-      apr,
-      duration,
+      Number(amount),
+      Number(apr),
+      Number(duration),
     )
 
     await sendTransaction(manifest)

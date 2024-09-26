@@ -10,7 +10,9 @@ export interface NFTData {
   non_fungible_id: string
 }
 
-export interface NonFungibleToken<T> {
+export type NFTDataTypes = BorrowerNFTData | LenderNFTData | unknown
+
+export interface NonFungibleToken<T extends NFTDataTypes> {
   id: string
   resource: string
   type: string

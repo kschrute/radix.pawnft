@@ -1,7 +1,8 @@
 import type { FieldData } from '@/types'
 
-export default function transformStateData(data: FieldData[]) {
+export default function transformStateData<T>(data: FieldData[]): T {
   const result = {}
+
   for (const field of data) {
     let value: string | number | Date | undefined = field.value ?? field.variant_name ?? 'Unknown'
 
@@ -29,5 +30,7 @@ export default function transformStateData(data: FieldData[]) {
     // @ts-ignore
     result[field.field_name] = value
   }
+
+  // @ts-ignore
   return result
 }

@@ -15,9 +15,6 @@ type LoanRegistryState = {
 export default function useLoanRegistryState() {
   const gatewayRequest = useGatewayRequest()
   const [data, setData] = useState<LoanRegistryState>({})
-  const { api, account } = useRadix()
-
-  const transformResponse = () => {}
 
   useEffect(() => {
     ;(async () => {

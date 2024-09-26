@@ -38,8 +38,8 @@ export default function LenderNFTItem({ nft }: Props) {
           </Heading>
         </CardHeader>
         {/*<CardBody>*/}
-          {/*<Text>{id}</Text>*/}
-          {/*
+        {/*<Text>{id}</Text>*/}
+        {/*
           <Text>Amount {data.amount} $XRD</Text>
           <Text>Total return {Math.floor(data.total_amount)} $XRD</Text>
           <Text>Duration {data.duration} days</Text>

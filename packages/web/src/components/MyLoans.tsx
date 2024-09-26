@@ -1,9 +1,9 @@
+import { Debug } from '@/components/Debug'
 import BorrowerNFTItem from '@/components/nfts/BorrowerNFTItem'
 import LenderNFTItem from '@/components/nfts/LenderNFTItem'
 import useUserNFTs from '@/hooks/useUserNFTs'
 import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Debug } from '@/components/Debug'
 
 export default function MyLoans() {
   const { userBorrowerNfts, userLenderNfts } = useUserNFTs()
