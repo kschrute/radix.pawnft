@@ -27,7 +27,6 @@ mod bootstrap {
                         manufacturer: "Nissan".to_string(),
                     },
                     Car {
-                        // Any raptor lovers?
                         name: "Raptor".to_string(),
                         manufacturer: "Ford".to_string(),
                     },

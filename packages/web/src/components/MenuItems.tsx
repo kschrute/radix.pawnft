@@ -11,7 +11,7 @@ type Props = {
 export default function MenuItems({ children, isOpen }: Props) {
   return (
     <Box
-      // alignSelf="self-end"
+      alignSelf="center"
       fontSize="sm"
       fontWeight="bold"
       textTransform="uppercase"
@@ -20,7 +20,7 @@ export default function MenuItems({ children, isOpen }: Props) {
       order={{ base: 99, sm: 99, md: 0 }}
       mb={1}
     >
-      <Stack alignItems="flex-end" spacing={5} direction={['column', 'column', 'row', 'row']} pt={[5, 5, 0, 0]}>
+      <Stack alignItems="flex-start" spacing={5} direction={['column', 'column', 'row', 'row']} pt={[5, 5, 0, 0]}>
         {children}
       </Stack>
     </Box>
