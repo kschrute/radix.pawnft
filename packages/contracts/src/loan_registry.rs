@@ -21,6 +21,10 @@ mod loan_registry {
         }
     }
 
+    // This component holds references to the borrower and lender nfts resouces and some stats for convenience
+    // The nfts are used to manage access to loans. For example when a user instantiate a new loan request they are
+    // give an nft that grants them access to manage the loan. They need to present that nft to either cancel or 
+    // repay a laon. Same with lenders. Whea a lender issues a loan 
     struct LoanRegistry {
         // resource manager for nfts issued to borrowers
         loan_borrower_nft_resource_manager: ResourceManager,

@@ -29,7 +29,7 @@ export default function Header(props: FlexProps) {
           <Link href="/borrow">Borrow</Link>
           <Link href="/lend">Lend</Link>
           <Link href="/my">My Loans</Link>
-          <Link href="/dev">Dev</Link>
+          {/*<Link href="/dev">Dev</Link>*/}
         </MenuItems>
 
         <Flex flex={1} justifyContent="flex-end">

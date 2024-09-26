@@ -15,6 +15,7 @@ mod loan_request {
         methods {
             cancel_request => restrict_to: [borrower];
             repay_loan => restrict_to: [borrower];
+            withdraw_payment => restrict_to: [lender];
             take_collateral => restrict_to: [lender];
             issue_loan => PUBLIC;
             check_maturity => PUBLIC;
@@ -276,8 +277,6 @@ mod loan_request {
 
 
         pub fn cancel_request(&mut self, loan_borrower_nft: Proof) -> Vec<NonFungibleBucket> {
-            info!("[!!!] LOAN STATUS: {}", Self::format_status(&self.loan_status));
-
             assert!(
                 matches!(
                     self.loan_status,
@@ -302,6 +301,18 @@ mod loan_request {
             let nfts = self.return_nfts();
 
             return nfts;
+        }
+
+        pub fn withdraw_payment(&mut self) -> Bucket {
+            assert!(
+                matches!(
+                    self.loan_status,
+                    LoanStatus::Repaid
+                ),
+                "[repay_loan]: Only issued loans can be repaid."
+            );
+
+            return self.payment_vault.take_all();
         }
 
         pub fn take_collateral(&mut self) -> Vec<NonFungibleBucket> {
