@@ -6,11 +6,11 @@ It's like a pawn shop, but for NFTs and it's peer-to-peer.
 
 There are two main components:
  
-1.`LoanRegistry`
+### LoanRegistry
 
 Instantiated once and holds references to borrower/lender nfts that are used to grant access to loan management. 
 
-2.`LoanRequest`
+### LoanRequest
 
 Instantiated per loan request. It holds a state of a loan during its lifecycle. 
 
