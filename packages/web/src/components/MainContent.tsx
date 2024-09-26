@@ -27,7 +27,7 @@ export default function MainContent() {
   const filter = useColorModeValue('none', 'invert()')
 
   return (
-    <Flex as="main" flex={1} flexDir="column" justifyContent="center">
+    <Box as="main">
       <Heading fontSize="4xl">Use your NFTs to get a loan</Heading>
 
       <Box fontSize="xl" my={5}>
@@ -61,6 +61,6 @@ export default function MainContent() {
           </Button>
         </Link>
       </ButtonGroup>
-    </Flex>
+    </Box>
   )
 }

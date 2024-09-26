@@ -30,7 +30,14 @@ ${fragment}
   return fragment
 }
 
-export default function instantiateLoanRequest(account: string, nftResource: string, nftId: string) {
+export default function instantiateLoanRequest(
+  account: string,
+  nftResource: string,
+  nftId: string,
+  amount: number,
+  apr: number,
+  duration: number,
+) {
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -58,9 +65,9 @@ CALL_FUNCTION
         Bucket("bucket")
     )
     Address("${config.xrdResource}")
-    Decimal("33")
-    Decimal("1.5")
-    30i64
+    Decimal("${amount}")
+    Decimal("${apr}")
+    ${duration}i64
     Address("${account}")
 ;
 CALL_METHOD

@@ -11,7 +11,7 @@ export const theme = extendTheme({
       body: {
         fontFamily: 'body',
         color: mode('gray.800', 'whiteAlpha.900')(props),
-        bg: mode('white', 'purple.900')(props),
+        bg: mode('white', '#180e43')(props),
         lineHeight: 'tall',
       },
     }),

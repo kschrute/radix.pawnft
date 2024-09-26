@@ -29,6 +29,7 @@ export default function Header(props: FlexProps) {
         <MenuItems isOpen={isOpen}>
           <Link href="/borrow">Borrow</Link>
           <Link href="/lend">Lend</Link>
+          <Link href="/my">My Loans</Link>
           <Link href="/dev">Dev</Link>
         </MenuItems>
 

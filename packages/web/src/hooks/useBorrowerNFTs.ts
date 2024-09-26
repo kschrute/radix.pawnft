@@ -2,7 +2,7 @@ import useLoanRegistryState from '@/hooks/useLoanRegistryState'
 import { useRadix } from '@/hooks/useRadix'
 import type { BorrowerNFTData, NonFungibleToken } from '@/types'
 import transformNftData from '@/utils/transformNftData'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function useBorrowerNFTs() {
   const { api } = useRadix()
@@ -12,16 +12,12 @@ export default function useBorrowerNFTs() {
   useEffect(() => {
     if (!api || !loan_borrower_nft_resource_manager) return
     ;(async () => {
+      const collectionMeta = await api.state.getEntityMetadata(loan_borrower_nft_resource_manager)
       const nftIds = await api.state.getNonFungibleIds(loan_borrower_nft_resource_manager)
-
-      console.log('nftIds', nftIds)
-
       const nftData = await api.state.getNonFungibleData(loan_borrower_nft_resource_manager, nftIds.items)
 
-      console.log('nftData', nftData)
-
       // @ts-ignore
-      setBorrowerNfts(transformNftData<BorrowerNFTData>(nftData))
+      setBorrowerNfts(transformNftData<BorrowerNFTData>(collectionMeta, nftData))
     })()
   }, [loan_borrower_nft_resource_manager, api])
 

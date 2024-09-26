@@ -1,5 +1,18 @@
+import type { FieldData } from '@/types/index'
+
+export interface NFTData {
+  data: {
+    programmatic_json: {
+      type_name: string
+      fields: FieldData[]
+    }
+  }
+  non_fungible_id: string
+}
+
 export interface NonFungibleToken<T> {
   id: string
+  resource: string
   type: string
   data: T
 }
@@ -11,8 +24,8 @@ export interface BorrowerNFTData {
   total_amount: number
   duration: number
   apr: number
-  maturity_date: string
-  closed_date: string
+  maturity_date?: Date
+  closed_date?: Date
   status: string
 }
 
@@ -21,6 +34,8 @@ export interface LenderNFTData {
   status: string
 }
 
+export type UnknownNFT = NonFungibleToken<Record<string, unknown>>
+
 export type BorrowerNFT = NonFungibleToken<BorrowerNFTData>
 
-export type LenderNFT = NonFungibleToken<BorrowerNFTData>
+export type LenderNFT = NonFungibleToken<LenderNFTData>

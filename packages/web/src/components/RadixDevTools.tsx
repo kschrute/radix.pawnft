@@ -16,7 +16,7 @@ export default function RadixDevTools() {
   const gatewayRequest = useGatewayRequest()
   const { api, rdt, account } = useRadix()
   const { sendTransaction } = useSendTransaction()
-  const { nftIds } = useUserNFTs()
+  // const { nftIds } = useUserNFTs()
 
   const onClickDev = async () => {
     if (!account || !api || !rdt) {
@@ -107,9 +107,11 @@ export default function RadixDevTools() {
         <Button onClick={onClickInstantiateLoanRegistry}>Instantiate Loan Registry</Button>
       </ButtonGroup>
       <Debug
-        data={{
-          nftIds,
-        }}
+        data={
+          {
+            // nftIds,
+          }
+        }
       />
     </Box>
   )

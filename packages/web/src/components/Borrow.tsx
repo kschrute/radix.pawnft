@@ -1,36 +1,59 @@
 'use client'
 
 import { Debug } from '@/components/Debug'
+import UnknowNftItem from '@/components/nfts/UnknowNftItem'
 import config from '@/config'
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import useUserNFTs from '@/hooks/useUserNFTs'
 import bootstrap from '@/manifests/bootstrap'
 import instantiateLoanRequest from '@/manifests/instantiateLoanRequest'
-import { Box, Button, ButtonGroup, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
+import type { UnknownNFT } from '@/types'
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Heading,
+  Input,
+  SimpleGrid,
+  Skeleton,
+} from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 export default function Borrow() {
   const { api, account } = useRadix()
-  const [nftResourceId, setNftResourceId] = useState(
-    'resource_tdx_2_1ntnamngqfllfy7uz67vnkuvkg8kg42y4mzkpl3xr57f344mf4tf3kt',
-  )
-  const [nftId, setNftId] = useState('{c6fc44a1fe07525f-a065657555113865-f34f3ddac94147e0-fb9d517f72619cb8}')
+  const [selectedNft, setSelectedNft] = useState<UnknownNFT>()
+  const [amount, setAmount] = useState<number>(100)
+  const [duration, setDuration] = useState<number>(30)
+  const [apr, setApr] = useState<number>(1.5)
   const { sendTransaction } = useSendTransaction()
-  const { nftIds, nfts } = useUserNFTs()
+  const { userNfts } = useUserNFTs()
 
-  const handleResourceIdChange = (e) => setNftResourceId(e.target.value)
+  // console.log('userNfts', userNfts)
 
-  const handleNftIdChange = (e) => setNftId(e.target.value)
+  const handleAmountChange = (e) => setAmount(e.target.value)
+  const handleDurationChange = (e) => setDuration(e.target.value)
+  const handleAprChange = (e) => setApr(e.target.value)
+
+  const onSelectNft = async (nft: UnknownNFT) => {
+    setSelectedNft(nft)
+  }
 
   const onClickBorrow = async () => {
-    if (!(nftResourceId && nftId && account)) return
+    if (!account) return
+    if (!selectedNft || !amount || !apr || !duration) return
 
-    console.log('config', config)
-
-    const manifest = instantiateLoanRequest(account.address, nftResourceId, nftId)
-
-    console.log('manifest', manifest)
+    const manifest = instantiateLoanRequest(
+      account.address,
+      selectedNft.resource,
+      selectedNft.id,
+      amount,
+      apr,
+      duration,
+    )
 
     await sendTransaction(manifest)
   }
@@ -39,28 +62,63 @@ export default function Borrow() {
     <Box>
       {/*<p>Borrow</p>*/}
 
-      <FormControl>
-        <FormLabel>NFT resource address</FormLabel>
-        <Input type="text" value={nftResourceId} onChange={handleResourceIdChange} />
-        {/*<FormHelperText>We'll never share your email.</FormHelperText>*/}
+      <Heading size="lg">Request a loan</Heading>
+
+      <FormControl my={5}>
+        <FormLabel>Amount</FormLabel>
+        <Input type="text" value={amount} onChange={handleAmountChange} />
       </FormControl>
 
-      <FormControl>
+      <FormControl my={5}>
+        <FormLabel>Duration</FormLabel>
+        <Input type="text" value={duration} onChange={handleDurationChange} />
+      </FormControl>
+
+      <FormControl my={5}>
+        <FormLabel>APR</FormLabel>
+        <Input type="text" value={apr} onChange={handleAprChange} />
+      </FormControl>
+
+      {/*
+      <FormControl my={5}>
+        <FormLabel>NFT resource address</FormLabel>
+        <Input type="text" value={nftResourceId} onChange={handleResourceIdChange} />
+        <FormHelperText>We'll never share your email.</FormHelperText>
+      </FormControl>
+
+      <FormControl my={5}>
         <FormLabel>NFT ID</FormLabel>
         <Input type="text" value={nftId} onChange={handleNftIdChange} />
-        {/*<FormHelperText>We'll never share your email.</FormHelperText>*/}
+        <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
+*/}
+
+      <FormLabel>Select an NFT you want to use as collateral</FormLabel>
+
+      {!userNfts && <Skeleton h={10} my={10} />}
+
+      <SimpleGrid my={10} spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
+        {userNfts?.map((nft) => (
+          <UnknowNftItem
+            key={`${nft.resource}:${nft.id}`}
+            nft={nft}
+            isActive={nft.resource === selectedNft?.resource && nft.id === selectedNft?.id}
+            onClickSelect={onSelectNft}
+          />
+        ))}
+      </SimpleGrid>
 
       <ButtonGroup my={5}>
         <Button onClick={onClickBorrow}>Borrow</Button>
       </ButtonGroup>
 
+      {/*
       <Debug
         data={{
-          nftIds,
-          nfts,
+          userNfts,
         }}
       />
+*/}
     </Box>
   )
 }

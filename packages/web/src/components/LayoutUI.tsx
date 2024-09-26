@@ -1,6 +1,6 @@
 'use client'
 
-import { Flex, Container } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 import React, { type ReactNode } from 'react'
 
 import Footer from '@/components/Footer'
@@ -15,9 +15,7 @@ export default function LayoutUI({ children }: Props) {
     <Flex flexDirection="column" minH="100vh">
       <Header />
       <Flex flex={1} flexDirection="column" alignItems="center" p={5}>
-        <Container maxW="4xl">
-          {children}
-        </Container>
+        <Container maxW="4xl">{children}</Container>
       </Flex>
       <Footer />
     </Flex>
