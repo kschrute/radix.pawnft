@@ -6,6 +6,7 @@ import issueLoan from '@/manifests/issueLoan'
 import type { BorrowerNFT } from '@/types'
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
+import repayLoan from '@/manifests/repayLoan'
 
 type Props = {
   nft: BorrowerNFT
@@ -27,10 +28,10 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
     await sendTransaction(manifest)
   }
 
-  const onClickPayBack = async () => {
+  const onClickRepay = async () => {
     if (!account) return
 
-    const manifest = issueLoan(account.address, data.component, data.amount)
+    const manifest = repayLoan(account.address, nft)
     await sendTransaction(manifest)
   }
 
@@ -45,20 +46,20 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
         </CardHeader>
         <CardBody>
           <Text>{id}</Text>
-          <Text>Amount {data.amount} $XRD</Text>
-          <Text>Total return {Math.floor(data.total_amount)} $XRD</Text>
-          <Text>Duration {data.duration} days</Text>
-          <Text>APR {data.apr}%</Text>
-          {data.maturity_date && <Text>Matures {data.maturity_date.toDateString()}</Text>}
+          <Text><b>{data.amount} $XRD</b> amount</Text>
+          <Text><b>{Math.floor(data.total_amount)} $XRD</b> with interest </Text>
+          <Text><b>{data.duration} days</b> term</Text>
+          <Text><b>{data.apr}%</b> APR</Text>
+          {data.maturity_date && <Text mt={5}>Matures {data.maturity_date.toDateString()}</Text>}
         </CardBody>
         {!isMyNft && nft.data.status === 'Requested' && (
-          <CardFooter>
+          <CardFooter pt={0}>
             <Button onClick={onClickAccept}>Issue Loan</Button>
           </CardFooter>
         )}
         {isMyNft && nft.data.status === 'Issued' && (
-          <CardFooter>
-            <Button onClick={onClickPayBack}>Pay off</Button>
+          <CardFooter pt={0}>
+            <Button onClick={onClickRepay}>Repay</Button>
           </CardFooter>
         )}
       </Card>
