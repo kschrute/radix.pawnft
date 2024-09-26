@@ -23,8 +23,4 @@ pub struct LoanLenderNFT {
 
     #[mutable]
     pub status: LoanStatus,
-
-    // pub loan_borrower_nft_id: NonFungibleLocalId,
-    // #[mutable]
-    // pub status: Status,
 }
