@@ -8,11 +8,11 @@ There are two main components:
  
 ### LoanRegistry
 
-Instantiated once and holds references to borrower/lender nfts that are used to grant access to loan management. 
+Instantiated once and holds references to borrower/lender nfts that are used to grant access to loan management throughout its lifecycle. 
 
 ### LoanRequest
 
-Instantiated per loan request. It holds a state of a loan during its lifecycle. 
+Instantiated per loan request. It holds the state of a loan during its lifecycle. 
 
 When a loan is requested a borrower puts one or many NFTs as collateral and names their loan terms. And in return they are given an NFT that gives them access to `cancel_request` and `repay_loan` methods. They can either cancel a loan if it hasn't been issued by another party yet or repay it if it has been issued, and they received the payment.
 
