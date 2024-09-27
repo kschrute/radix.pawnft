@@ -4,7 +4,7 @@ It's like a pawn shop, but for NFTs and it's peer-to-peer.
 
 ## Demo
 
-https://radix-pawnft-q66f2iifg-konstantinshkuts-projects.vercel.app
+Stokenet app available here https://radix-pawnft.vercel.app
 
 ![Demo](demo.png?raw=true "Demo")
 
