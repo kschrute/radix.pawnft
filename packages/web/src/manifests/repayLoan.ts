@@ -2,6 +2,7 @@ import config from '@/config'
 import type { BorrowerNFT } from '@/types'
 
 export default function repayLoan(account: string, nft: BorrowerNFT) {
+  console.log('nft', nft)
   return `
 CALL_METHOD
     Address("${config.faucetComponent}")
@@ -32,7 +33,7 @@ CALL_METHOD
     "create_proof_of_non_fungibles"
     Address("${nft.resource}")
     Array<NonFungibleLocalId>(
-        NonFungibleLocalId("#1#")
+        NonFungibleLocalId("${nft.id}")
     )
 ;
 POP_FROM_AUTH_ZONE
