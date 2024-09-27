@@ -55,8 +55,8 @@ export default function RadixDevTools() {
       console.log(await api.state.getEntityDetailsVaultAggregated(account.address))
     }
 
-    const allNonFungibleIds = await api.state.getEntityDetailsVaultAggregated(config.nftResourceAddress)
-    console.log('allNonFungibleIds', allNonFungibleIds)
+    // const allNonFungibleIds = await api.state.getEntityDetailsVaultAggregated(config.nftResourceAddress)
+    // console.log('allNonFungibleIds', allNonFungibleIds)
   }
 
   const onClickDebug = async () => {
