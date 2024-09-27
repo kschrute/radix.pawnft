@@ -6,6 +6,8 @@ It's like a pawn shop, but for NFTs and it's peer-to-peer.
 
 https://radix-pawnft-q66f2iifg-konstantinshkuts-projects.vercel.app
 
+![Demo](demo.png?raw=true "Demo")
+
 ## Design
 
 There are two main components:
