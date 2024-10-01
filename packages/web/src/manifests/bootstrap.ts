@@ -2,11 +2,6 @@ import config from '@/config'
 
 export default function bootstrap(account: string) {
   return `
-CALL_METHOD
-    Address("${config.faucetComponent}")
-    "lock_fee"
-    Decimal("5000")
-;
 CALL_FUNCTION
     Address("${config.packageAddress}")
     "Bootstrap"

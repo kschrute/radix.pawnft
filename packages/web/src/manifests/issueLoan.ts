@@ -2,11 +2,6 @@ import config from '@/config'
 
 export default function issueLoan(account: string, loanRequestComponent: string, amount: number) {
   return `
-CALL_METHOD
-    Address("${config.faucetComponent}")
-    "lock_fee"
-    Decimal("5000")
-;
 CALL_METHOD 
     Address("${account}")
     "withdraw"    

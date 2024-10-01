@@ -4,11 +4,6 @@ import type { BorrowerNFT, LenderNFT } from '@/types'
 export default function takeCollateral(account: string, nft: LenderNFT) {
   return `
 CALL_METHOD
-    Address("${config.faucetComponent}")
-    "lock_fee"
-    Decimal("5000")
-;
-CALL_METHOD
     Address("${account}")
     "create_proof_of_non_fungibles"
     Address("${nft.resource}")
