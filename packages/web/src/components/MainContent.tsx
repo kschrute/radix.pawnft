@@ -1,7 +1,7 @@
 'use client'
 
-import { Box, Button, ButtonGroup, Heading, Text, } from '@chakra-ui/react'
-import { CircleStackIcon, PercentBadgeIcon, } from '@heroicons/react/24/solid'
+import { Box, Button, ButtonGroup, Heading, Text } from '@chakra-ui/react'
+import { CircleStackIcon, PercentBadgeIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import React from 'react'
 
