@@ -39,11 +39,11 @@ export default function instantiateLoanRequest(
   duration: number,
 ) {
   return `
-CALL_METHOD
-    Address("${config.faucetComponent}")
-    "lock_fee"
-    Decimal("5000")
-;
+# CALL_METHODx
+#     Address("${config.faucetComponent}")
+#     "lock_fee"
+#     Decimal("5000")
+# ;
 CALL_METHOD
     Address("${account}")
     "withdraw_non_fungibles"

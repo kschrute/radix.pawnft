@@ -1,13 +1,15 @@
 'use client'
 
+import UnknowNftList from '@/components/nfts/UnknowNftList'
+import useAccountNFTs from '@/hooks/useAccountNFTs'
 import useGatewayRequest from '@/hooks/useGatewayRequest'
 import { useRadix } from '@/hooks/useRadix'
 import { useSendTransaction } from '@/hooks/useSendTransaction'
 import takeCollateral from '@/manifests/takeCollateral'
 import type { LenderNFT } from '@/types'
 import transformStateData from '@/utils/transformStateData'
-import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { Badge, Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 type Props = {
   nft: LenderNFT
@@ -30,10 +32,18 @@ export interface LoanRequestState {
 export default function LenderNFTItem({ nft }: Props) {
   const gatewayRequest = useGatewayRequest()
   const { account } = useRadix()
-  const { sendTransaction } = useSendTransaction()
+  const { sendTransaction, isPending } = useSendTransaction()
   const { id, data } = nft
+  const { accountNfts } = useAccountNFTs(data.component)
   const [loanRequestState, setLoanRequestState] = useState<LoanRequestState>()
   const { loan_amount, loan_amount_total, loan_duration, loan_apr, loan_maturity_date } = loanRequestState || {}
+
+  const canClaimCollateral = useMemo(() => {
+    const now = new Date()
+    return loan_maturity_date && data.status === 'Issued' && loan_maturity_date <= now
+  }, [data.status, loan_maturity_date])
+
+  console.log('loan_maturity_date', loan_maturity_date)
 
   useEffect(() => {
     ;(async () => {
@@ -84,17 +94,34 @@ export default function LenderNFTItem({ nft }: Props) {
               <b>{Math.floor(loan_amount_total)} $XRD</b> with interest{' '}
             </Text>
           )}
+          {loan_apr && (
+            <Text>
+              <b>{loan_apr * 100}%</b> APR
+            </Text>
+          )}
           <Text>
             <b>{loan_duration} days</b> term
           </Text>
-          <Text>
-            <b>{loan_apr}%</b> APR
-          </Text>
-          {loan_maturity_date && <Text mt={5}>Matures {loan_maturity_date.toISOString()}</Text>}
+          {loan_maturity_date && (
+            <Text>
+              <b>{loan_maturity_date.toLocaleDateString()}</b> Maturity
+            </Text>
+          )}
+
+          {accountNfts && accountNfts.length > 0 && (
+            <Box mt={5}>
+              <Heading mb={5} size="sm">
+                Collateral
+              </Heading>
+              <UnknowNftList nfts={accountNfts} />
+            </Box>
+          )}
         </CardBody>
-        {nft.data.status === 'Issued' && (
+        {canClaimCollateral && (
           <CardFooter pt={0}>
-            <Button onClick={onClickTakeCollateral}>Take Collateral</Button>
+            <Button onClick={onClickTakeCollateral} isLoading={isPending} loadingText="Approve in Wallet">
+              Take Collateral
+            </Button>
           </CardFooter>
         )}
       </Card>

@@ -14,7 +14,7 @@ import React from 'react'
 export default function RadixDevTools() {
   const gatewayRequest = useGatewayRequest()
   const { api, rdt, account } = useRadix()
-  const { sendTransaction } = useSendTransaction()
+  const { sendTransaction, isPending } = useSendTransaction()
 
   const onClickDev = async () => {
     if (!account || !api || !rdt) {
@@ -100,7 +100,9 @@ export default function RadixDevTools() {
       <ButtonGroup>
         <Button onClick={onClickDev}>Dev</Button>
         <Button onClick={onClickDebug}>Debug</Button>
-        <Button onClick={onClickBootstrap}>Bootstrap</Button>
+        <Button onClick={onClickBootstrap} isLoading={isPending} loadingText="Approve in Wallet">
+          Bootstrap
+        </Button>
         <Button onClick={onClickInstantiateLoanRegistry}>Instantiate Loan Registry</Button>
       </ButtonGroup>
       <Debug data={{}} />

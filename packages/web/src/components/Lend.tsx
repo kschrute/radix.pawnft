@@ -9,7 +9,7 @@ export default function Lend() {
   return (
     <Box>
       {borrowerNfts === undefined && <Skeleton h={10} />}
-      <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
+      <SimpleGrid columns={[1, 2, 3]} spacing={5}>
         {borrowerNfts?.map((nft) => (
           <BorrowerNFTItem key={nft.id} nft={nft} />
         ))}

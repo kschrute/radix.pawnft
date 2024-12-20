@@ -7,7 +7,7 @@ import React from 'react'
 type Props = {
   nft: UnknownNFT
   isActive: boolean
-  onClickSelect: (nft: UnknownNFT) => void
+  onClickSelect?: (nft: UnknownNFT) => void
 }
 
 export default function UnknowNftItem({ nft, isActive, onClickSelect }: Props) {
@@ -15,7 +15,7 @@ export default function UnknowNftItem({ nft, isActive, onClickSelect }: Props) {
   const name = (data?.name as string) ?? id ?? 'Unknown'
 
   const handleSelect = async () => {
-    onClickSelect(nft)
+    onClickSelect?.(nft)
   }
 
   return (

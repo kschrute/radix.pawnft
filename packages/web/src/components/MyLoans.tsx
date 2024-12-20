@@ -16,7 +16,7 @@ export default function MyLoans() {
       {userBorrowerNfts === undefined && <Skeleton h={10} />}
       {userBorrowerNfts?.length === 0 && <Text>You don't have any loans yet.</Text>}
       {userBorrowerNfts?.length > 0 && (
-        <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
+        <SimpleGrid columns={[1, 2, 3]} spacing={5}>
           {userBorrowerNfts.map((nft) => (
             <BorrowerNFTItem key={nft.id} nft={nft} isMyNft />
           ))}
@@ -30,7 +30,7 @@ export default function MyLoans() {
       {userLenderNfts === undefined && <Skeleton h={10} />}
       {userLenderNfts?.length === 0 && <Text>You haven't given out any loans yet.</Text>}
       {userLenderNfts?.length > 0 && (
-        <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
+        <SimpleGrid columns={[1, 2, 3]} spacing={5}>
           {userLenderNfts.map((nft) => (
             <LenderNFTItem key={nft.id} nft={nft} />
           ))}

@@ -6,7 +6,7 @@ export default function LoanStats() {
   const data = useLoanRegistryState()
   const { loans_issued_count, loans_requested_count, loans_repaid_count, loans_defaulted_count } = data
   return (
-    <Box my={10}>
+    <Box bg="blackAlpha.500" my={10} p={5} rounded="lg">
       <StatGroup>
         <Stat>
           <StatLabel>Loans Requested</StatLabel>

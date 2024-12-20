@@ -1,8 +1,10 @@
 'use client'
 
 import { useRadix } from '@/hooks/useRadix'
+import { useState } from 'react'
 
 export function useSendTransaction() {
+  const [isPending, setIsPending] = useState(false)
   const { rdt, api } = useRadix()
 
   const sendTransaction = async (manifest: string) => {
@@ -10,10 +12,12 @@ export function useSendTransaction() {
 
     console.log('Manifest: ', manifest)
 
+    setIsPending(true)
     const result = await rdt.walletApi.sendTransaction({
       transactionManifest: manifest,
       version: 1,
     })
+    setIsPending(false)
     if (result.isErr()) throw result.error
     console.log('Result: ', result.value)
 
@@ -27,5 +31,5 @@ export function useSendTransaction() {
     console.log('affected_global_entities:', committedDetails.transaction.affected_global_entities)
   }
 
-  return { sendTransaction }
+  return { sendTransaction, isPending }
 }
