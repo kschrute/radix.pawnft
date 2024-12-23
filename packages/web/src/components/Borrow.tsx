@@ -10,7 +10,6 @@ import instantiateLoanRequest from '@/manifests/instantiateLoanRequest'
 import type { UnknownNFT } from '@/types'
 import { addDays, formatNumber } from '@/utils'
 import {
-  Alert,
   Box,
   Button,
   ButtonGroup,
