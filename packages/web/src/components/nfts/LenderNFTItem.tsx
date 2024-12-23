@@ -104,7 +104,7 @@ export default function LenderNFTItem({ nft }: Props) {
           </Text>
           {loan_maturity_date && (
             <Text>
-              <b>{loan_maturity_date.toLocaleDateString()}</b> Maturity
+              <b>{loan_maturity_date.toLocaleDateString()}</b> maturity
             </Text>
           )}
 

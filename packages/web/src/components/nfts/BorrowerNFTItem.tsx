@@ -60,7 +60,7 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
           </Text>
           {data.maturity_date && (
             <Text>
-              <b>{data.maturity_date.toLocaleDateString()}</b> Maturity
+              <b>{data.maturity_date.toLocaleDateString()}</b> maturity
             </Text>
           )}
 
