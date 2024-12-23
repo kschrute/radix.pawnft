@@ -75,7 +75,9 @@ export default function BorrowerNFTItem({ nft, isMyNft = false }: Props) {
         </CardBody>
         {!isMyNft && nft.data.status === 'Requested' && (
           <CardFooter pt={0}>
-            <Button onClick={onClickAccept}>Issue Loan</Button>
+            <Button onClick={onClickAccept} isLoading={isPending} loadingText="Approve in Wallet">
+              Issue Loan
+            </Button>
           </CardFooter>
         )}
         {isMyNft && nft.data.status === 'Issued' && (
