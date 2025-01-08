@@ -1,5 +1,5 @@
 import useLoanRegistryState from '@/hooks/useLoanRegistryState'
-import { Box, Skeleton, Stat, StatGroup, StatLabel, StatNumber } from '@chakra-ui/react'
+import { Box, Skeleton, Stat, StatGroup, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/react'
 import React from 'react'
 
 export default function LoanStats() {
@@ -12,6 +12,7 @@ export default function LoanStats() {
           <StatLabel>Loans Requested</StatLabel>
           {loans_requested_count === undefined && <Skeleton h={10} />}
           <StatNumber>{loans_requested_count}</StatNumber>
+          {/*<StatHelpText>Total</StatHelpText>*/}
         </Stat>
 
         <Stat>

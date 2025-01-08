@@ -39,5 +39,26 @@ export default function RadixProvider({ children }: { children: ReactNode }) {
     setLoading(false)
   }, [])
 
+  // useEffect(() => {
+  //   if (rdt) {
+  //     console.log('Updating...')
+  //   }
+  //   // rdt?.walletApi.setRequestData(DataRequestBuilder.accounts().exactly(1))
+  //   // rdt?.walletApi.setRequestData(
+  //   //     DataRequestBuilder.persona().withProof(),
+  //   //     DataRequestBuilder.accounts().exactly(2),
+  //   //     DataRequestBuilder.personaData().fullName().emailAddresses(),
+  //   // )
+  //   rdt?.walletApi.setRequestData(DataRequestBuilder.accounts().exactly(1))
+  //   // Subscribe to updates to the user's shared wallet data, then display the account name and address.
+  //   rdt?.walletApi.walletData$.subscribe((walletData) => {
+  //     console.log('connected wallet data: ', walletData)
+  //     // Set the account variable to the first and only connected account from the wallet
+  //     const account = walletData.accounts[0]
+  //     console.log('account', account)
+  //     setAccount(account)
+  //   })
+  // }, [rdt])
+
   return <RadixContext.Provider value={{ loading, api, rdt }}>{children}</RadixContext.Provider>
 }

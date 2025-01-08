@@ -7,8 +7,10 @@ import React, { useState } from 'react'
 import DarkModeSwitch from '@/components/DarkModeSwitch'
 import MenuItems from '@/components/MenuItems'
 import MenuToggle from '@/components/MenuToggle'
+import { useRadix } from '@/hooks'
 
 export default function Header(props: FlexProps) {
+  useRadix()
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(!isOpen)
 

@@ -43,7 +43,7 @@ export default function LenderNFTItem({ nft }: Props) {
     return loan_maturity_date && data.status === 'Issued' && loan_maturity_date <= now
   }, [data.status, loan_maturity_date])
 
-  console.log('loan_maturity_date', loan_maturity_date)
+  // console.log('loan_maturity_date', loan_maturity_date)
 
   useEffect(() => {
     ;(async () => {

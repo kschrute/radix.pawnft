@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <Box>
       <Heading mb={10}>My Loans</Heading>
-      <LoanStats />
+      {/*<LoanStats />*/}
       <MyLoans />
     </Box>
   )

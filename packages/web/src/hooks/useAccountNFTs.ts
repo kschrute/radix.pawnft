@@ -16,7 +16,7 @@ export default function useAccountNFTs(address?: string) {
       let accountNfts: UnknownNFT[] = []
 
       const entityDetails = await api.state.getEntityDetailsVaultAggregated(address)
-      console.log('entityDetails', entityDetails)
+      // console.log('entityDetails', entityDetails)
 
       for (const collection of entityDetails.non_fungible_resources.items) {
         const collectionMeta = await api.state.getEntityMetadata(collection.resource_address)

@@ -13,7 +13,7 @@ type Props = {
 export default function UnknowNftItem({ nft, isActive, onClickSelect }: Props) {
   const { id, type, data } = nft
   const name = (data?.name as string) ?? id ?? 'Unknown'
-  const image = data.key_image_url as string ?? 'https://i.imgur.com/DehtNMl.png'
+  const image = (data.key_image_url as string) ?? 'https://i.imgur.com/DehtNMl.png'
 
   const handleSelect = async () => {
     onClickSelect?.(nft)

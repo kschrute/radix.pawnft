@@ -14,7 +14,7 @@ export function useRadix() {
       // console.log('connected wallet data: ', walletData)
       // Set the account variable to the first and only connected account from the wallet
       const account = walletData.accounts[0]
-      // console.log('account', account)
+      console.log('account', account)
       setAccount(account)
     })
   }, [rdt])
